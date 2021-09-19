@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+
+# 뷰(URL을 통해 호출할 수 있음)
+def index(request):
+    return HttpResponse("Hello, world. Your're at the polls index.")
