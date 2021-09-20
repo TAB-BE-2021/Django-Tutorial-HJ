@@ -1,0 +1,10 @@
+{% if latest_question_list %}
+<ul>
+  {% for question in latest_question_list %}
+  <!-- app_name='polls'인 앱 파일의 path함수 중 name속성이 'detail'인 함수 참조 -->
+  <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No polls are available.</p>
+{% endif %}
