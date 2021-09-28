@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 
 from .models import Choice, Question
 
@@ -11,13 +12,20 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        # 'pub_date'에 '-'를 붙여 내림차순(최신수)으로 정렬
-        return Question.objects.order_by('-pub_date')[:5]
+        # 'pub_date'에 '-'를 붙여 내림차순(최신순)으로 정렬
+        # pub_date__lte를 통해 timezone.now()보다 작거나 같은 질문만 필터링
+        return Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')[:5]
 
 
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
+
+    def get_queryset(self):
+        # 질문 생성 시간이 현재 시점보다 미래인 질문 제외
+        return Question.objects.filter(pub_date__lte=timezone.now())
 
 
 class ResultsView(generic.DetailView):
