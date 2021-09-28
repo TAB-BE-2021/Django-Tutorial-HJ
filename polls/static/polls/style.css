@@ -1,0 +1,9 @@
+li a {
+  color: green;
+}
+
+body {
+  background: white
+    url("https://res.cloudinary.com/practicaldev/image/fetch/s--SK2mPJLd--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://thepracticaldev.s3.amazonaws.com/i/2p24444g94djp87cxkhw.gif")
+    no-repeat;
+}
