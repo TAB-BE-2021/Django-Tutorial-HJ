@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.contrib import admin
 
 
 class Question(models.Model):
@@ -13,6 +14,12 @@ class Question(models.Model):
 
     def was_published_recently(self):
         # 현재로부터 pub_date가 24시간 이내라면 True, 그렇지 않다면 False
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    # 정렬옵션(시간순) 지정, 컬럼명 지정, boolean 아이콘 사용
+    @admin.display(boolean=True, ordering='pub_date', description='Published recently?')
+    def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
